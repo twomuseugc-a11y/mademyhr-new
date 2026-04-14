@@ -13,7 +13,9 @@ const products = [
 export default function Navbar() {
   const [search, setSearch] = useState("");
   const [showResults, setShowResults] = useState(false);
-  const searchRef = useRef(null);
+
+  // ✅ FIX 1: add type
+  const searchRef = useRef<HTMLDivElement | null>(null);
 
   const filtered = products.filter((p) =>
     p.name.toLowerCase().includes(search.toLowerCase())
@@ -21,13 +23,19 @@ export default function Navbar() {
 
   // CLOSE DROPDOWN ON OUTSIDE CLICK
   useEffect(() => {
-    function handleClickOutside(e) {
-      if (searchRef.current && !searchRef.current.contains(e.target)) {
+    // ✅ FIX 2: add type + safe casting
+    function handleClickOutside(e: MouseEvent) {
+      if (
+        searchRef.current &&
+        !searchRef.current.contains(e.target as Node)
+      ) {
         setShowResults(false);
       }
     }
+
     document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    return () =>
+      document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   return (
@@ -49,18 +57,12 @@ export default function Navbar() {
       {/* NAV LINKS */}
       <div className="hidden md:flex gap-10 text-sm tracking-wide">
 
-        <Link
-          href="/about"
-          className="relative group"
-        >
+        <Link href="/about" className="relative group">
           About Us
           <span className="absolute left-0 -bottom-1 w-0 h-[1px] bg-white transition-all group-hover:w-full"></span>
         </Link>
 
-        <Link
-          href="/"
-          className="relative group"
-        >
+        <Link href="/" className="relative group">
           Shop
           <span className="absolute left-0 -bottom-1 w-0 h-[1px] bg-white transition-all group-hover:w-full"></span>
         </Link>
