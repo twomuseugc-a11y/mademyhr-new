@@ -13,17 +13,15 @@ const products = [
 export default function Navbar() {
   const [search, setSearch] = useState("");
   const [showResults, setShowResults] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
-  // ✅ FIX 1: add type
   const searchRef = useRef<HTMLDivElement | null>(null);
 
   const filtered = products.filter((p) =>
     p.name.toLowerCase().includes(search.toLowerCase())
   );
 
-  // CLOSE DROPDOWN ON OUTSIDE CLICK
   useEffect(() => {
-    // ✅ FIX 2: add type + safe casting
     function handleClickOutside(e: MouseEvent) {
       if (
         searchRef.current &&
@@ -39,42 +37,38 @@ export default function Navbar() {
   }, []);
 
   return (
-    <nav className="bg-black text-white px-6 md:px-12 py-4 flex items-center justify-between sticky top-0 z-50">
+    <nav className="bg-black text-white px-6 md:px-12 py-5 flex items-center justify-between sticky top-0 z-50 border-b border-white/10">
 
       {/* LOGO */}
       <Link href="/" className="flex items-center">
         <Image
           src="/logo.png"
-          alt="madebyhr"
+          alt="madebyhr logo"
           width={120}
           height={40}
           priority
-          style={{ height: "auto" }}
-          className="hover:opacity-80 transition"
+          className="hover:opacity-80 transition duration-300"
         />
       </Link>
 
-      {/* NAV LINKS */}
-      <div className="hidden md:flex gap-10 text-sm tracking-wide">
-
+      {/* DESKTOP NAV */}
+      <div className="hidden md:flex gap-12 text-[13px] tracking-[0.15em] uppercase">
         <Link href="/about" className="relative group">
-          About Us
-          <span className="absolute left-0 -bottom-1 w-0 h-[1px] bg-white transition-all group-hover:w-full"></span>
+          About
+          <span className="absolute left-0 -bottom-1 w-0 h-[1px] bg-white/80 transition-all duration-300 group-hover:w-full"></span>
         </Link>
 
         <Link href="/" className="relative group">
           Shop
-          <span className="absolute left-0 -bottom-1 w-0 h-[1px] bg-white transition-all group-hover:w-full"></span>
+          <span className="absolute left-0 -bottom-1 w-0 h-[1px] bg-white/80 transition-all duration-300 group-hover:w-full"></span>
         </Link>
-
       </div>
 
       {/* RIGHT SIDE */}
-      <div className="flex items-center gap-5 relative">
+      <div className="flex items-center gap-4 md:gap-6 relative">
 
         {/* SEARCH */}
-        <div ref={searchRef} className="relative">
-
+        <div ref={searchRef} className="relative hidden md:block">
           <input
             type="text"
             placeholder="Search"
@@ -83,13 +77,11 @@ export default function Navbar() {
               setSearch(e.target.value);
               setShowResults(true);
             }}
-            className="bg-white text-black text-sm px-4 py-2 rounded-full outline-none w-[130px] focus:w-[200px] transition-all duration-300 shadow-sm"
+            className="bg-white text-black text-sm px-4 py-2 rounded-full outline-none w-[120px] focus:w-[200px] transition-all duration-300 shadow-sm"
           />
 
-          {/* DROPDOWN */}
           {showResults && search && (
-            <div className="absolute top-12 right-0 bg-white text-black w-56 rounded-xl shadow-xl overflow-hidden animate-dropdown z-50">
-
+            <div className="absolute top-12 right-0 bg-white text-black w-60 rounded-xl shadow-xl overflow-hidden z-50">
               {filtered.length > 0 ? (
                 filtered.map((item, i) => (
                   <Link
@@ -99,7 +91,7 @@ export default function Navbar() {
                       setShowResults(false);
                       setSearch("");
                     }}
-                    className="block px-4 py-3 hover:bg-[#f5efe6] text-sm transition"
+                    className="block px-4 py-3 text-sm hover:bg-[#f5efe6]"
                   >
                     {item.name}
                   </Link>
@@ -109,26 +101,52 @@ export default function Navbar() {
                   No results found
                 </p>
               )}
-
             </div>
           )}
         </div>
 
-        {/* WISHLIST */}
-        <button className="text-lg hover:scale-110 transition duration-200">
-          ♡
-        </button>
-
         {/* CART */}
-        <Link
-          href="/cart"
-          className="text-lg hover:scale-110 transition duration-200"
-        >
+        <Link href="/cart" className="text-lg hover:scale-110 transition">
           🛒
         </Link>
 
+        {/* MOBILE MENU BUTTON */}
+        <button
+          className="md:hidden text-2xl"
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          ☰
+        </button>
       </div>
 
+      {/* MOBILE MENU */}
+      {menuOpen && (
+        <div className="absolute top-full left-0 w-full bg-black text-white flex flex-col items-center gap-6 py-6 md:hidden animate-fadeIn">
+
+          <Link
+            href="/about"
+            onClick={() => setMenuOpen(false)}
+            className="text-sm tracking-wide"
+          >
+            About
+          </Link>
+
+          <Link
+            href="/"
+            onClick={() => setMenuOpen(false)}
+            className="text-sm tracking-wide"
+          >
+            Shop
+          </Link>
+
+          {/* MOBILE SEARCH */}
+          <input
+            type="text"
+            placeholder="Search"
+            className="bg-white text-black px-4 py-2 rounded-full w-[80%]"
+          />
+        </div>
+      )}
     </nav>
   );
 }

@@ -1,11 +1,26 @@
 "use client";
-import { createContext, useContext, useState } from "react";
+
+import { createContext, useContext, useState, useEffect } from "react";
 
 const CartContext = createContext();
 
 export function CartProvider({ children }) {
   const [cart, setCart] = useState([]);
 
+  // ✅ LOAD FROM LOCALSTORAGE ON START
+  useEffect(() => {
+    const stored = localStorage.getItem("cart");
+    if (stored) {
+      setCart(JSON.parse(stored));
+    }
+  }, []);
+
+  // ✅ SAVE TO LOCALSTORAGE ON CHANGE
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }, [cart]);
+
+  // ✅ ADD TO CART
   const addToCart = (product) => {
     setCart((prev) => {
       const existing = prev.find(
@@ -16,7 +31,7 @@ export function CartProvider({ children }) {
       );
 
       if (existing) {
-        if (existing.quantity >= 5) return prev; // limit 5
+        if (existing.quantity >= 5) return prev;
 
         return prev.map((item) =>
           item === existing
@@ -29,6 +44,7 @@ export function CartProvider({ children }) {
     });
   };
 
+  // ✅ INCREASE
   const increaseQty = (index) => {
     setCart((prev) =>
       prev.map((item, i) =>
@@ -39,6 +55,7 @@ export function CartProvider({ children }) {
     );
   };
 
+  // ✅ DECREASE
   const decreaseQty = (index) => {
     setCart((prev) =>
       prev
@@ -51,13 +68,27 @@ export function CartProvider({ children }) {
     );
   };
 
+  // ✅ REMOVE
   const removeItem = (index) => {
     setCart((prev) => prev.filter((_, i) => i !== index));
   };
 
+  // ✅ CLEAR CART (IMPORTANT FOR CHECKOUT)
+  const clearCart = () => {
+    setCart([]);
+    localStorage.removeItem("cart");
+  };
+
   return (
     <CartContext.Provider
-      value={{ cart, addToCart, increaseQty, decreaseQty, removeItem }}
+      value={{
+        cart,
+        addToCart,
+        increaseQty,
+        decreaseQty,
+        removeItem,
+        clearCart,
+      }}
     >
       {children}
     </CartContext.Provider>
