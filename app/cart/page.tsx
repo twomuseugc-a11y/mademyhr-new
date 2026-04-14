@@ -4,13 +4,25 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useCart } from "../context/CartContext";
 
+// ✅ ADD TYPE (VERY IMPORTANT)
+type CartItem = {
+  name: string;
+  price: number;
+  quantity: number;
+  image?: string;
+  size?: string;
+  fit?: string;
+  note?: string;
+};
+
 export default function CartPage() {
   const router = useRouter();
 
   const { cart, increaseQty, decreaseQty, removeItem } = useCart();
 
+  // ✅ FIXED TYPE ERROR HERE
   const total = cart.reduce(
-    (sum, item) => sum + item.price * item.quantity,
+    (sum: number, item: CartItem) => sum + item.price * item.quantity,
     0
   );
 
@@ -22,80 +34,90 @@ export default function CartPage() {
         {/* LEFT */}
         <div className="space-y-6">
 
-          {cart.map((item, index) => (
-            <div
-              key={index}
-              className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition"
-            >
-              <div className="flex gap-5">
+          {cart.map((item: CartItem, index: number) => {
 
-                {/* IMAGE */}
-                <div className="relative w-28 h-36 rounded-lg overflow-hidden">
-                  <Image
-                    src={item.image}
-                    alt={item.name}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
+            // ✅ FIX IMAGE ERROR (VERY IMPORTANT)
+            const image =
+              item.image &&
+              (item.image.startsWith("/") || item.image.startsWith("http"))
+                ? item.image
+                : "/product1.jpg";
 
-                {/* DETAILS */}
-                <div className="flex-1">
+            return (
+              <div
+                key={index}
+                className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition"
+              >
+                <div className="flex gap-5">
 
-                  <h2 className="text-[16px] font-medium text-[#1a1a1a]">
-                    {item.name}
-                  </h2>
+                  {/* IMAGE */}
+                  <div className="relative w-28 h-36 rounded-lg overflow-hidden">
+                    <Image
+                      src={image}
+                      alt={item.name || "product image"} // ✅ FIX ALT ERROR
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
 
-                  <p className="text-sm text-[#3a3a3a] mt-1 leading-relaxed">
-                    Size: {item.size} • Fit: {item.fit}
-                  </p>
+                  {/* DETAILS */}
+                  <div className="flex-1">
 
-                  {item.note && (
-                    <p className="text-xs text-[#4a4a4a] mt-2 leading-relaxed">
-                      {item.note}
+                    <h2 className="text-[16px] font-medium text-[#1a1a1a]">
+                      {item.name}
+                    </h2>
+
+                    <p className="text-sm text-[#3a3a3a] mt-1 leading-relaxed">
+                      Size: {item.size || "N/A"} • Fit: {item.fit || "N/A"}
                     </p>
-                  )}
 
-                  {/* QTY */}
-                  <div className="flex items-center gap-4 mt-4">
+                    {item.note && (
+                      <p className="text-xs text-[#4a4a4a] mt-2 leading-relaxed">
+                        {item.note}
+                      </p>
+                    )}
+
+                    {/* QTY */}
+                    <div className="flex items-center gap-4 mt-4">
+
+                      <button
+                        onClick={() => decreaseQty(index)}
+                        className="w-8 h-8 border border-gray-300 rounded-full hover:bg-black hover:text-white transition"
+                      >
+                        −
+                      </button>
+
+                      <span className="text-sm text-[#1a1a1a]">
+                        {item.quantity}
+                      </span>
+
+                      <button
+                        onClick={() => increaseQty(index)}
+                        className="w-8 h-8 border border-gray-300 rounded-full hover:bg-black hover:text-white transition"
+                      >
+                        +
+                      </button>
+
+                    </div>
 
                     <button
-                      onClick={() => decreaseQty(index)}
-                      className="w-8 h-8 border border-gray-300 rounded-full hover:bg-black hover:text-white transition"
+                      onClick={() => removeItem(index)}
+                      className="text-xs text-[#4a4a4a] mt-4 hover:underline hover:text-black"
                     >
-                      −
-                    </button>
-
-                    <span className="text-sm text-[#1a1a1a]">
-                      {item.quantity}
-                    </span>
-
-                    <button
-                      onClick={() => increaseQty(index)}
-                      className="w-8 h-8 border border-gray-300 rounded-full hover:bg-black hover:text-white transition"
-                    >
-                      +
+                      Remove item
                     </button>
 
                   </div>
 
-                  <button
-                    onClick={() => removeItem(index)}
-                    className="text-xs text-[#4a4a4a] mt-4 hover:underline hover:text-black"
-                  >
-                    Remove item
-                  </button>
+                  {/* PRICE */}
+                  <div className="text-right text-[#1a1a1a] font-medium">
+                    ₹{item.price * item.quantity}
+                  </div>
 
                 </div>
-
-                {/* PRICE */}
-                <div className="text-right text-[#1a1a1a] font-medium">
-                  ₹{item.price * item.quantity}
-                </div>
-
               </div>
-            </div>
-          ))}
+            );
+          })}
 
           {cart.length === 0 && (
             <p className="text-center text-[#4a4a4a]">
@@ -114,7 +136,7 @@ export default function CartPage() {
 
           <div className="space-y-3 text-sm text-[#3a3a3a]">
 
-            {cart.map((item, index) => (
+            {cart.map((item: CartItem, index: number) => (
               <div key={index} className="flex justify-between">
                 <span>
                   {item.name} × {item.quantity}
@@ -142,65 +164,6 @@ export default function CartPage() {
           <p className="text-xs text-[#4a4a4a] mt-3 text-center leading-relaxed">
             Each piece is made to order. Delivery in 15–20 days.
           </p>
-
-        </div>
-
-      </div>
-
-      {/* PREMIUM BRAND SECTION */}
-      <div className="max-w-6xl mx-auto mt-24">
-
-        <div className="border-t border-gray-200 mb-12"></div>
-
-        {/* BRAND MESSAGE */}
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <h2 className="text-xl md:text-2xl font-light text-[#1a1a1a] tracking-wide">
-            Thoughtfully Made, Just for You
-          </h2>
-          <p className="text-sm text-[#4a4a4a] mt-4 leading-relaxed">
-            At madebyhr, each piece is crafted only after you place your order.
-            We focus on slow fashion, intentional design, and timeless silhouettes.
-          </p>
-        </div>
-
-        {/* TRUST BLOCKS */}
-        <div className="grid md:grid-cols-3 gap-10 text-center">
-
-          <div className="flex flex-col items-center gap-3">
-            <div className="w-10 h-10 rounded-full border flex items-center justify-center">
-              ✂️
-            </div>
-            <p className="text-sm font-medium text-[#1a1a1a]">
-              Made to Order
-            </p>
-            <p className="text-xs text-[#4a4a4a] max-w-[180px] leading-relaxed">
-              Each garment is created after your order is placed.
-            </p>
-          </div>
-
-          <div className="flex flex-col items-center gap-3">
-            <div className="w-10 h-10 rounded-full border flex items-center justify-center">
-              🚚
-            </div>
-            <p className="text-sm font-medium text-[#1a1a1a]">
-              Delivery Timeline
-            </p>
-            <p className="text-xs text-[#4a4a4a] max-w-[180px] leading-relaxed">
-              Ships within 15–20 days with careful craftsmanship.
-            </p>
-          </div>
-
-          <div className="flex flex-col items-center gap-3">
-            <div className="w-10 h-10 rounded-full border flex items-center justify-center">
-              🌿
-            </div>
-            <p className="text-sm font-medium text-[#1a1a1a]">
-              Conscious Design
-            </p>
-            <p className="text-xs text-[#4a4a4a] max-w-[180px] leading-relaxed">
-              Designed for comfort, longevity, and mindful consumption.
-            </p>
-          </div>
 
         </div>
 
