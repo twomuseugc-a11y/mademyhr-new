@@ -17,12 +17,14 @@ export default function CheckoutPage() {
     pincode: "",
   });
 
-  const handleChange = (e: any) => {
+  // ✅ FIXED TYPE
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  // ✅ FIXED TYPE ERROR HERE
   const total = cart.reduce(
-    (sum, item) => sum + item.price * item.quantity,
+    (sum: number, item: any) => sum + item.price * item.quantity,
     0
   );
 
@@ -56,9 +58,8 @@ export default function CheckoutPage() {
       // ✅ CLEAR CART
       clearCart();
 
-      // ✅ REDIRECT TO SUCCESS
+      // ✅ REDIRECT
       router.push("/success");
-
     }, 1500);
   };
 
@@ -106,7 +107,7 @@ export default function CheckoutPage() {
 
           <div className="space-y-3 text-sm text-[#3a3a3a]">
 
-            {cart.map((item, index) => (
+            {cart.map((item: any, index: number) => (
               <div key={index} className="flex justify-between">
                 <span>{item.name} × {item.quantity}</span>
                 <span>₹{item.price * item.quantity}</span>
