@@ -1,51 +1,68 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { useSearchParams } from "next/navigation"; // ✅ ADDED
 
 export default function SuccessPage() {
-  const router = useRouter();
+
+  // ✅ ADDED
+  const searchParams = useSearchParams();
+  const msg = searchParams.get("msg");
+  const phone = searchParams.get("phone");
+
+  const whatsappLink =
+    msg && phone
+      ? `https://wa.me/${phone}?text=${msg}`
+      : "https://wa.me/919902379397"; // fallback
 
   return (
-    <div className="min-h-screen bg-[#f5efe7] flex flex-col items-center justify-center px-6 text-center">
+    <div className="min-h-screen bg-[#f5efe7] flex items-center justify-center px-6">
 
-      {/* SUCCESS ICON */}
-      <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mb-6">
-        <span className="text-2xl">✓</span>
-      </div>
+      <div className="bg-white rounded-3xl shadow-lg p-10 max-w-md w-full text-center">
 
-      {/* TITLE */}
-      <h1 className="text-2xl md:text-3xl font-light text-[#1a1a1a] tracking-wide">
-        Order Confirmed
-      </h1>
+        {/* ✅ SUCCESS ICON */}
+        <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-green-100 flex items-center justify-center text-2xl">
+          ✅
+        </div>
 
-      {/* MESSAGE */}
-      <p className="text-sm text-[#4a4a4a] mt-4 max-w-md leading-relaxed">
-        Thank you for choosing madebyhr. Your piece will now be crafted
-        exclusively for you with care and intention.
-      </p>
+        {/* TITLE */}
+        <h1 className="text-2xl font-medium text-[#1a1a1a] mb-3">
+          Payment Successful
+        </h1>
 
-      {/* DETAILS */}
-      <div className="mt-8 text-sm text-[#3a3a3a] space-y-1">
-        <p>Delivery Timeline: 15–20 days</p>
-        <p>You’ll receive updates via email</p>
-      </div>
+        {/* SUBTEXT */}
+        <p className="text-sm text-[#4a4a4a] leading-relaxed mb-6">
+          Your order has been placed successfully.
+          <br />
+          We’ll start crafting your piece with care.
+        </p>
 
-      {/* BUTTONS */}
-      <div className="flex gap-4 mt-10">
+        {/* BRAND LINE */}
+        <p className="text-xs text-gray-400 mb-8">
+          Made slowly · Delivered with intention
+        </p>
 
-        <button
-          onClick={() => router.push("/")}
-          className="px-6 py-3 bg-[#b88a5a] text-white rounded-full text-sm tracking-wide hover:opacity-90 transition"
-        >
-          Continue Shopping
-        </button>
+        {/* ACTION BUTTONS */}
+        <div className="flex flex-col gap-3">
 
-        <button
-          onClick={() => router.push("/admin")}
-          className="px-6 py-3 border border-gray-300 rounded-full text-sm hover:bg-black hover:text-white transition"
-        >
-          View Orders
-        </button>
+          {/* CONTINUE SHOPPING */}
+          <Link
+            href="/"
+            className="w-full bg-[#b88a5a] text-white py-3 rounded-full text-sm tracking-wide hover:opacity-90 transition text-center"
+          >
+            Continue Shopping
+          </Link>
+
+          {/* ✅ UPDATED WHATSAPP BUTTON */}
+          <a
+            href={whatsappLink}
+            target="_blank"
+            className="w-full bg-[#25D366] text-white py-3 rounded-full text-sm tracking-wide hover:opacity-90 transition text-center"
+          >
+            Send Order on WhatsApp
+          </a>
+
+        </div>
 
       </div>
 

@@ -3,6 +3,13 @@
 import { useState } from "react";
 import { useCart } from "../context/CartContext";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
+
+declare global {
+  interface Window {
+    Razorpay: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  }
+}
 
 export default function CheckoutPage() {
   const { cart, clearCart } = useCart();
@@ -17,14 +24,12 @@ export default function CheckoutPage() {
     pincode: "",
   });
 
-  // ✅ FIXED TYPE
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  // ✅ FIXED TYPE ERROR HERE
   const total = cart.reduce(
-    (sum: number, item: any) => sum + item.price * item.quantity,
+    (sum: number, item: any) => sum + item.price * item.quantity, // eslint-disable-line @typescript-eslint/no-explicit-any
     0
   );
 
@@ -34,33 +39,136 @@ export default function CheckoutPage() {
       return;
     }
 
-    const res = await fetch("/api/create-order", {
-      method: "POST",
-      body: JSON.stringify({ amount: total }),
-    });
-
-    const data = await res.json();
-
-    alert("Simulating payment...");
-
-    setTimeout(async () => {
-      // ✅ SAVE ORDER
-      await fetch("/api/save-order", {
+    try {
+      // ✅ CREATE ORDER
+      const res = await fetch("/api/create-order", {
         method: "POST",
-        body: JSON.stringify({
-          customer: form,
-          items: cart,
-          total,
-          status: "paid",
-        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ amount: total }),
       });
 
-      // ✅ CLEAR CART
-      clearCart();
+      const order = await res.json();
 
-      // ✅ REDIRECT
-      router.push("/success");
-    }, 1500);
+      if (!order.id) {
+        alert("Order creation failed");
+        return;
+      }
+
+      // ✅ RAZORPAY OPTIONS
+      const options = {
+        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+        amount: order.amount,
+        currency: "INR",
+        name: "madebyhr",
+        description: "Order Payment",
+        order_id: order.id,
+
+        handler: async function (response: any) { // eslint-disable-line @typescript-eslint/no-explicit-any
+          try {
+            // ✅ VERIFY PAYMENT
+            const verifyRes = await fetch("/api/verify-payment", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature,
+              }),
+            });
+
+            const verifyData = await verifyRes.json();
+
+            if (!verifyData.success) {
+              alert("Payment verification failed ❌");
+              return;
+            }
+
+            // ✅ SAVE ORDER
+            await fetch("/api/save-order", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                customer: form,
+                items: cart,
+                total,
+                paymentId: response.razorpay_payment_id,
+                orderId: response.razorpay_order_id,
+                status: "paid",
+              }),
+            });
+
+            // 🔥 KEEP YOUR LOCAL STORAGE (UNCHANGED)
+            localStorage.setItem(
+              "lastOrder",
+              JSON.stringify({
+                name: form.name,
+                phone: form.phone,
+                total,
+                items: cart,
+              })
+            );
+
+            // 🔥 ✅ ADDED WHATSAPP MESSAGE
+            const message = `
+New Order 🛍️
+
+Name: ${form.name}
+Phone: ${form.phone}
+Address: ${form.address}, ${form.city} - ${form.pincode}
+
+Items:
+${cart
+  .map(
+    (item: any) => // eslint-disable-line @typescript-eslint/no-explicit-any
+      `• ${item.name} (${item.size}, ${item.fit}) x${item.quantity} = ₹${
+        item.price * item.quantity
+      }`
+  )
+  .join("\n")}
+
+Total: ₹${total}
+`;
+
+            const encodedMessage = encodeURIComponent(message);
+
+            const phoneNumber = "919902379397";
+
+            // ✅ CLEAR CART
+            clearCart();
+
+            // 🔥 UPDATED REDIRECT (ONLY CHANGE)
+            router.push(`/success?msg=${encodedMessage}&phone=${phoneNumber}`);
+
+          } catch (err) {
+            console.error("VERIFY ERROR:", err);
+            alert("Something went wrong after payment");
+          }
+        },
+
+        prefill: {
+          name: form.name,
+          email: form.email,
+          contact: form.phone,
+        },
+
+        theme: {
+          color: "#b88a5a",
+        },
+      };
+
+      const rzp = new window.Razorpay(options);
+      rzp.open();
+
+    } catch (error) {
+      console.error("PAYMENT ERROR:", error);
+      alert("Something went wrong");
+    }
   };
 
   return (
@@ -105,12 +213,26 @@ export default function CheckoutPage() {
             Order Summary
           </h2>
 
-          <div className="space-y-3 text-sm text-[#3a3a3a]">
+          <div className="space-y-4 text-sm text-[#3a3a3a]">
 
-            {cart.map((item: any, index: number) => (
-              <div key={index} className="flex justify-between">
-                <span>{item.name} × {item.quantity}</span>
-                <span>₹{item.price * item.quantity}</span>
+            {cart.map((item: any, index: number) => ( // eslint-disable-line @typescript-eslint/no-explicit-any
+              <div key={index} className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                {item.image && (
+                  <Image
+                    src={item.image}
+                    alt={item.name}
+                    width={48}
+                    height={48}
+                    className="w-12 h-12 rounded-lg object-cover"
+                  />
+                )}
+                <div className="flex-1">
+                  <p className="font-medium text-[#1a1a1a]">{item.name}</p>
+                  <p className="text-xs text-gray-600">
+                    Size: {item.size}, Fit: {item.fit} × {item.quantity}
+                  </p>
+                </div>
+                <span className="font-medium">₹{item.price * item.quantity}</span>
               </div>
             ))}
 

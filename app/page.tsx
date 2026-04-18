@@ -2,11 +2,11 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import FadeIn from "./components/FadeIn";
+// import FadeIn from "./components/FadeIn";
 import { useEffect, useState } from "react";
 
 export default function Home() {
-  const [dbProducts, setDbProducts] = useState<any[]>([]);
+  const [dbProducts, setDbProducts] = useState<any[]>([]); // eslint-disable-line @typescript-eslint/no-explicit-any
 
   // ✅ FETCH DB PRODUCTS
   useEffect(() => {
@@ -15,24 +15,31 @@ export default function Home() {
         const res = await fetch("/api/products");
         const data = await res.json();
 
-        // ✅ FIX: filter + clean invalid images
-        const safeProducts = data.map((p: any) => ({
-          _id: p._id,
-          name: p.name || "Untitled",
-          price: p.price ? `₹${p.price}` : "₹0",
+        // ✅ FILTER OUT bad products from the DB
+        const blockedNames = ["corsety", "corset", "cordsety", "cordset", "cordsety"];
+        const validProducts = data.filter((p: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
+          const hasName = typeof p.name === "string" && p.name.trim() !== "";
+          const isBlockedName = blockedNames.some((blocked) =>
+            p.name?.toLowerCase().includes(blocked)
+          );
+          const hasPrice = typeof p.price === "number" && p.price > 0;
+          const validImage =
+            typeof p.image === "string" &&
+            p.image.startsWith("/") &&
+            !p.image.includes("cloudinary.com");
 
-          // 🔥 CRITICAL FIX HERE
-          img:
-            p.image &&
-            (p.image.startsWith("/") ||
-              p.image.startsWith("http://") ||
-              p.image.startsWith("https://"))
-              ? p.image
-              : "/product1.jpg", // fallback image
+          return hasName && !isBlockedName && hasPrice && validImage;
+        });
+
+        const safeProducts = validProducts.map((p: any) => ({ // eslint-disable-line @typescript-eslint/no-explicit-any
+          _id: p._id,
+          name: p.name,
+          price: `₹${p.price}`,
+          img: p.image,
         }));
 
         setDbProducts(safeProducts);
-      } catch (err) {
+      } catch (err) { // eslint-disable-line @typescript-eslint/no-unused-vars
         console.log("Error fetching products");
       }
     };
@@ -51,21 +58,21 @@ export default function Home() {
 
         <div className="relative z-10 text-center px-6 max-w-3xl">
           
-          <FadeIn>
+          <div>
             <h1 className="text-4xl md:text-7xl font-light leading-tight tracking-wide">
               Made slowly,<br />
               <span className="italic">worn proudly.</span>
             </h1>
-          </FadeIn>
+          </div>
 
-          <FadeIn delay={0.2}>
+          <div>
             <p className="mt-6 text-[#4a4a4a] max-w-md mx-auto leading-relaxed">
               Thoughtfully crafted pieces designed for comfort, simplicity,
               and timeless everyday wear.
             </p>
-          </FadeIn>
+          </div>
 
-          <FadeIn delay={0.4}>
+          <div>
             <div className="mt-10">
               <a
                 href="#collection"
@@ -74,7 +81,7 @@ export default function Home() {
                 EXPLORE COLLECTION
               </a>
             </div>
-          </FadeIn>
+          </div>
 
         </div>
       </section>
@@ -82,11 +89,11 @@ export default function Home() {
       {/* COLLECTION */}
       <section id="collection" className="px-6 md:px-12 py-24">
 
-        <FadeIn>
+        <div>
           <h2 className="text-3xl md:text-4xl text-center mb-14 font-light tracking-wide">
             Our Collection
           </h2>
-        </FadeIn>
+        </div>
 
         <div className="grid grid-cols-2 md:grid-cols-3 gap-10">
 
@@ -98,9 +105,9 @@ export default function Home() {
 
             // ✅ DB PRODUCTS SAFE
             ...dbProducts,
-          ].map((item: any, i) => (
+          ].map((item: any, i) => ( // eslint-disable-line @typescript-eslint/no-explicit-any
 
-            <FadeIn key={i} delay={i * 0.2}>
+            <div key={i}>
               <Link
                 href={item._id ? `/product/${item._id}` : "/product"}
                 className="group block"
@@ -112,16 +119,17 @@ export default function Home() {
                   <div className="absolute inset-0 bg-white z-10 translate-y-0 group-hover:translate-y-full transition duration-700"></div>
 
                   {/* ✅ FIX: NEVER EMPTY SRC */}
-                  {item.img ? (
+                  {item.img && item.img !== "/product1.jpg" && item.img !== "/product2.jpg" && item.img !== "/product3.jpg" ? (
                     <Image
                       src={item.img}
                       alt={item.name}
                       fill
+                      sizes="(max-width: 768px) 50vw, 33vw"
                       className="object-cover group-hover:scale-105 transition duration-700"
                     />
                   ) : (
-                    <div className="w-full h-full bg-gray-200 flex items-center justify-center text-xs">
-                      No Image
+                    <div className="w-full h-full bg-gray-200 flex items-center justify-center text-gray-500 text-sm">
+                      Image<br />Coming Soon
                     </div>
                   )}
 
@@ -139,7 +147,7 @@ export default function Home() {
                 </p>
 
               </Link>
-            </FadeIn>
+            </div>
 
           ))}
 
@@ -153,13 +161,13 @@ export default function Home() {
       {/* WHY US */}
       <section className="px-6 md:px-16 py-24 bg-[#efe7dc]">
 
-        <FadeIn>
+        <div>
           <h2 className="text-3xl md:text-4xl text-center font-light mb-14 tracking-wide">
             Why madebyhr
           </h2>
-        </FadeIn>
+        </div>
 
-        <FadeIn delay={0.2}>
+        <div>
           <div className="grid md:grid-cols-3 gap-12 text-center">
 
             <div className="flex flex-col items-center gap-3">
@@ -187,14 +195,14 @@ export default function Home() {
             </div>
 
           </div>
-        </FadeIn>
+        </div>
 
       </section>
 
       {/* STORY */}
       <section className="px-6 md:px-16 py-24">
 
-        <FadeIn>
+        <div>
           <div className="grid md:grid-cols-2 gap-16 items-center">
 
             <div className="relative w-full h-[420px] rounded-3xl overflow-hidden">
@@ -202,6 +210,7 @@ export default function Home() {
                 src="/story.jpg"
                 alt="story"
                 fill
+                sizes="(max-width: 768px) 100vw, 50vw"
                 loading="eager"
                 className="object-cover"
               />
@@ -217,11 +226,19 @@ export default function Home() {
             </div>
 
           </div>
-        </FadeIn>
+        </div>
 
       </section>
 
-      <footer className="bg-black text-white text-center py-6 text-xs mt-10">
+      <footer className="bg-black text-white text-center py-6 text-xs mt-10 relative">
+        <div className="absolute bottom-4 right-4">
+          <a
+            href="/login"
+            className="text-xs text-gray-400 hover:text-white transition"
+          >
+            Admin Login
+          </a>
+        </div>
         © {new Date().getFullYear()} madebyhr
       </footer>
 

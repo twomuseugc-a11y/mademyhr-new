@@ -5,15 +5,13 @@ import { createContext, useContext, useState, useEffect } from "react";
 const CartContext = createContext();
 
 export function CartProvider({ children }) {
-  const [cart, setCart] = useState([]);
-
-  // ✅ LOAD FROM LOCALSTORAGE ON START
-  useEffect(() => {
-    const stored = localStorage.getItem("cart");
-    if (stored) {
-      setCart(JSON.parse(stored));
+  const [cart, setCart] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const stored = localStorage.getItem("cart");
+      return stored ? JSON.parse(stored) : [];
     }
-  }, []);
+    return [];
+  });
 
   // ✅ SAVE TO LOCALSTORAGE ON CHANGE
   useEffect(() => {

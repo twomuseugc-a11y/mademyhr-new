@@ -52,12 +52,19 @@ export default function CartPage() {
 
                   {/* IMAGE */}
                   <div className="relative w-28 h-36 rounded-lg overflow-hidden">
-                    <Image
-                      src={image}
-                      alt={item.name || "product image"} // ✅ FIX ALT ERROR
-                      fill
-                      className="object-cover"
-                    />
+                    {image && !image.includes('cloudinary') ? (
+                      <Image
+                        src={image}
+                        alt={item.name || "product image"}
+                        fill
+                        sizes="112px"
+                        className="object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gray-200 flex items-center justify-center text-gray-500 text-xs">
+                        No Image
+                      </div>
+                    )}
                   </div>
 
                   {/* DETAILS */}

@@ -1,21 +1,25 @@
 import Image from "next/image";
 
-async function getProduct(id: string) {
-  try {
-    const res = await fetch(`http://localhost:3000/api/products/${id}`, {
-      cache: "no-store",
-    });
+const products = [
+  {
+    id: "1",
+    name: "Linen Wrap Dress",
+    price: 4200,
+    image: "/product1.jpg",
+    description: "Soft breathable linen, made just for you.",
+  },
+  {
+    id: "2",
+    name: "Cozy Knit Sweater",
+    price: 2800,
+    image: "/product2.jpg",
+    description: "Warm, cozy, and perfect for everyday wear.",
+  },
+];
 
-    if (!res.ok) return null;
-
-    return res.json();
-  } catch {
-    return null;
-  }
-}
-
-export default async function ProductPage({ params }: any) {
-  const product = await getProduct(params.id);
+export default async function ProductPage({ params }: any) { // eslint-disable-line @typescript-eslint/no-explicit-any
+  const { id } = await params;
+  const product = products.find((p) => p.id === id);
 
   if (!product) {
     return (
@@ -25,13 +29,6 @@ export default async function ProductPage({ params }: any) {
     );
   }
 
-  // ✅ SAFE IMAGE (no crash ever)
-  const image =
-    product?.image &&
-    (product.image.startsWith("/") || product.image.startsWith("http"))
-      ? product.image
-      : "/product1.jpg";
-
   return (
     <main className="px-6 md:px-16 py-20 bg-[#f5efe6] min-h-screen">
 
@@ -40,26 +37,25 @@ export default async function ProductPage({ params }: any) {
         {/* IMAGE */}
         <div className="relative w-full h-[500px] rounded-2xl overflow-hidden">
           <Image
-            src={image}
-            alt={product?.name || "product image"}   // ✅ FIXED
+            src={product.image}
+            alt={product.name}
             fill
             className="object-cover"
-            loading="eager"                          // ✅ performance
           />
         </div>
 
         {/* DETAILS */}
         <div>
           <h1 className="text-3xl md:text-5xl font-light mb-4">
-            {product?.name || "Product"}             {/* ✅ SAFE */}
+            {product.name}
           </h1>
 
           <p className="text-xl mb-6">
-            ₹{product?.price || "—"}
+            ₹{product.price}
           </p>
 
           <p className="text-[#4a4a4a] mb-8">
-            {product?.description || "No description available."}
+            {product.description}
           </p>
 
           <button className="px-8 py-3 bg-black text-white rounded-full hover:opacity-90 transition">
