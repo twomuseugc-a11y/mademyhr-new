@@ -14,16 +14,20 @@ export type Product = {
 export const products: Product[] = [
   {
     id: "1",
-    name: "Wine Ease Top",
+    name: "Maroon Muse Bow Top",
     price: 899,
-    description: "Soft breathable linen tailored for everyday elegance.",
+    description:
+      "Add a touch of elegance to your wardrobe with the Maroon Muse Bow Top. Crafted in a rich maroon shade, this top features delicate bow-tie sleeves that bring a subtle yet stylish charm. Made from soft cotton fabric, it is lightweight, breathable, and designed for all-day comfort—perfect for both casual outings and refined everyday looks.",
     details: [
-      "100% premium linen",
-      "Handcrafted in India",
-      "Lightweight & breathable",
+      "Made from premium cotton fabric",
+      "Lightweight and breathable for everyday wear",
+      "Soft and comfortable on the skin",
+      "Elegant bow-tie sleeve detailing",
+      "Rich maroon color for a classy look",
+      "Suitable for casual and semi-formal occasions",
     ],
     care: [
-      "Dry clean recommended",
+      "Machine wash cold",
       "Do not bleach",
       "Iron on low heat",
     ],
@@ -34,17 +38,17 @@ export const products: Product[] = [
   },
   {
     id: "2",
-    name: "Elara Bottle Bloom Bow Top",
+    name: "Maroon Muse Bow Top",
     price: 899,
     description:
-      "Elevate your everyday style with the Elara Bottle Bloom Bow Top, crafted in a rich bottle green shade. Designed with elegant bow-tie sleeves, this top blends charm with comfort. Made from soft cotton fabric, it feels lightweight, breathable, and perfect for all-day wear—whether you're dressing up or keeping it casual.",
+      "Add a touch of elegance to your wardrobe with the Maroon Muse Bow Top. Crafted in a rich maroon shade, this top features delicate bow-tie sleeves that bring a subtle yet stylish charm. Made from soft cotton fabric, it is lightweight, breathable, and designed for all-day comfort—perfect for both casual outings and refined everyday looks.",
     details: [
-      "Premium cotton fabric",
-      "Lightweight and breathable",
-      "Soft and comfortable for all-day wear",
-      "Elegant bow-tie sleeve design",
-      "Rich bottle green color",
-      "Perfect for casual and semi-formal styling",
+      "Made from premium cotton fabric",
+      "Lightweight and breathable for everyday wear",
+      "Soft and comfortable on the skin",
+      "Elegant bow-tie sleeve detailing",
+      "Rich maroon color for a classy look",
+      "Suitable for casual and semi-formal occasions",
     ],
     care: [
       "Machine wash cold",
