@@ -39,8 +39,8 @@ export default function CheckoutPage() {
   );
 
   const handlePayment = async () => {
-    if (!form.name || !form.phone || !form.address) {
-      alert("Please fill required details");
+    if (!form.name || !form.phone || !form.address || !form.email) {
+      alert("Please fill all required details (name, phone, email, address)");
       return;
     }
 

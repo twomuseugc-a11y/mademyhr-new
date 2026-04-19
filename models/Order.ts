@@ -17,7 +17,7 @@ const OrderSchema = new mongoose.Schema(
         fit: String,
         quantity: { type: Number, default: 1 },
         image: String,
-        customSize: String,
+        customMeasurements: String,
         notes: String,
       },
     ],

@@ -24,7 +24,7 @@ interface Order {
     quantity?: number;
     price?: number;
     image?: string;
-    customSize?: string;
+    customMeasurements?: string;
     notes?: string;
   }[];
   createdAt: string;

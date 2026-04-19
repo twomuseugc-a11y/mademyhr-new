@@ -12,7 +12,7 @@ interface OrderItem {
   fit: string;
   quantity: number;
   image: string;
-  customSize?: string;
+  customMeasurements?: string;
   notes?: string;
 }
 
@@ -118,8 +118,8 @@ export default function OrdersPage() {
                         <p className="text-sm text-gray-600">
                           Size: {item.size} | Fit: {item.fit} | Qty: {item.quantity}
                         </p>
-                        {item.customSize && (
-                          <p className="text-sm text-gray-600">Custom Size: {item.customSize}</p>
+                        {item.customMeasurements && (
+                          <p className="text-sm text-gray-600">Custom Measurements: {item.customMeasurements}</p>
                         )}
                         {item.notes && (
                           <p className="text-sm text-gray-600">Notes: {item.notes}</p>
