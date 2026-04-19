@@ -14,16 +14,20 @@ export type Product = {
 export const products: Product[] = [
   {
     id: "1",
-    name: "Wine Ease Top",
-    price: 1500,
-    description: "Soft breathable linen tailored for everyday elegance.",
+    name: "Maroon Muse Bow Top",
+    price: 899,
+    description:
+      "Add a touch of elegance to your wardrobe with the Maroon Muse Bow Top. Crafted in a rich maroon shade, this top features delicate bow-tie sleeves that bring a subtle yet stylish charm. Made from soft cotton fabric, it is lightweight, breathable, and designed for all-day comfort—perfect for both casual outings and refined everyday looks.",
     details: [
-      "100% premium linen",
-      "Handcrafted in India",
-      "Lightweight & breathable",
+      "Made from premium cotton fabric",
+      "Lightweight and breathable for everyday wear",
+      "Soft and comfortable on the skin",
+      "Elegant bow-tie sleeve detailing",
+      "Rich maroon color for a classy look",
+      "Suitable for casual and semi-formal occasions",
     ],
     care: [
-      "Dry clean recommended",
+      "Machine wash cold",
       "Do not bleach",
       "Iron on low heat",
     ],
