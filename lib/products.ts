@@ -15,7 +15,7 @@ export const products: Product[] = [
   {
     id: "1",
     name: "Wine Ease Top",
-    price: 1500,
+    price: 899,
     description: "Soft breathable linen tailored for everyday elegance.",
     details: [
       "100% premium linen",
