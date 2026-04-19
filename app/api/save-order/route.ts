@@ -4,8 +4,11 @@ import Order from "@/models/Order";
 import nodemailer from "nodemailer";
 
 export async function POST(req: Request) {
+  let dbConnected = false;
+
   try {
     await connectDB();
+    dbConnected = true;
 
     const body = await req.json();
 
@@ -72,17 +75,29 @@ We’ll start crafting your piece soon 💛
     return NextResponse.json({
       success: true,
       order,
+      dbConnected: true,
     });
 
   } catch (error) {
     console.error("SAVE ORDER ERROR:", error);
 
-    // Return success even if DB fails, but log it
-    // This prevents payment verification from failing
+    // If DB connection failed, return success but indicate DB issue
+    if (!dbConnected) {
+      console.error("DATABASE CONNECTION FAILED - Order not saved!");
+      return NextResponse.json({
+        success: true, // Don't fail payment flow
+        order: null,
+        dbConnected: false,
+        warning: "Database connection failed - order not saved"
+      });
+    }
+
+    // If DB connected but order creation failed, still return success
     return NextResponse.json({
       success: true, // Don't fail the payment flow
       order: null,
-      warning: "Order saved locally, DB sync pending"
+      dbConnected: true,
+      warning: "Order creation failed but payment verified"
     });
   }
 }
