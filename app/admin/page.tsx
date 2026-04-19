@@ -105,11 +105,17 @@ export default function AdminPage() {
       }
 
       const data = await res.json();
-      console.log(`[ADMIN] Received ${data.length || 0} orders from API`);
+      console.log("[ADMIN] API Response:", data);
 
-      // Ensure data is an array and has proper structure
-      const orders = Array.isArray(data) ? data : [];
-      console.log("[ADMIN] Setting orders state:", orders.length);
+      // Handle new response format: { success, orders, count, dbConnected }
+      const orders = data.orders || (Array.isArray(data) ? data : []);
+      console.log(`[ADMIN] Received ${orders.length} orders from API`);
+
+      // Check if database connection failed
+      if (data.dbConnected === false) {
+        console.error("[ADMIN] Database connection failed:", data.error);
+        alert("Database connection failed. Orders may not be up to date.");
+      }
 
       setOrders(orders);
     } catch (error) {

@@ -46,7 +46,9 @@ export default function OrdersPage() {
       const response = await fetch("/api/orders");
       if (!response.ok) throw new Error("Failed to fetch orders");
       const data = await response.json();
-      setOrders(data);
+      // Handle new response format: { success, orders, count, dbConnected }
+      const ordersData = data.orders || (Array.isArray(data) ? data : []);
+      setOrders(ordersData);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Unknown error");
     } finally {

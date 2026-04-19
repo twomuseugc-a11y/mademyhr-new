@@ -10,7 +10,9 @@ export default function OrdersPage() {
     try {
       const res = await fetch("/api/orders");
       const data = await res.json();
-      setOrders(data);
+      // Handle new response format: { success, orders, count, dbConnected }
+      const ordersData = data.orders || (Array.isArray(data) ? data : []);
+      setOrders(ordersData);
     } catch (err) { // eslint-disable-line @typescript-eslint/no-unused-vars
       console.log("Error fetching orders");
     }

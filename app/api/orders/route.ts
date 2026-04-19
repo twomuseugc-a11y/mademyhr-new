@@ -35,14 +35,25 @@ export async function GET() {
       updatedAt: order.updatedAt?.toISOString() || new Date().toISOString(),
     }));
 
-    console.log(`[ORDERS API] Fetched ${processedOrders.length} orders`);
+    console.log(`[ORDERS API] Fetched ${processedOrders.length} orders successfully`);
 
-    return NextResponse.json(processedOrders);
+    return NextResponse.json({
+      success: true,
+      orders: processedOrders,
+      count: processedOrders.length,
+      dbConnected: true
+    });
   } catch (error) {
     console.error("GET ORDERS ERROR:", error);
 
-    // Return empty array instead of error to prevent admin panel crash
-    return NextResponse.json([]);
+    // Return error info instead of empty array for debugging
+    return NextResponse.json({
+      success: false,
+      orders: [],
+      count: 0,
+      dbConnected: false,
+      error: error instanceof Error ? error.message : "Database connection failed"
+    });
   }
 }
 
