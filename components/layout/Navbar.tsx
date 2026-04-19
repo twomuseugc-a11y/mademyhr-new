@@ -3,19 +3,20 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useMemo } from "react";
-import { getCatalogProducts } from "@/features/products/product.service";
+import { useProducts } from "@/hooks/useProducts";
 
 export default function Navbar() {
   const [search, setSearch] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
+  const products = useProducts();
 
   const searchItems = useMemo(
     () =>
-      getCatalogProducts().map((product) => ({
+      products.map((product) => ({
         name: product.name,
         link: `/product/${product.id}`,
       })),
-    []
+    [products]
   );
 
   const filtered = useMemo(

@@ -17,7 +17,7 @@ export const products: Product[] = [
     name: "Maroon Muse Bow Top",
     price: 899,
     description:
-      "Add a touch of elegance to your wardrobe with the Maroon Muse Bow Top. Crafted in a rich maroon shade, this top features delicate bow-tie sleeves that bring a subtle yet stylish charm. Made from soft cotton fabric, it is lightweight, breathable, and designed for all-day comfort—perfect for both casual outings and refined everyday looks.",
+      "Add a touch of elegance to your wardrobe with the Maroon Muse Bow Top. Crafted in a rich maroon shade, this top features delicate bow-tie sleeves that bring a subtle yet stylish charm. Made from soft cotton fabric, it is lightweight, breathable, and designed for all-day comfort-perfect for both casual outings and refined everyday looks.",
     details: [
       "Made from premium cotton fabric",
       "Lightweight and breathable for everyday wear",
@@ -41,7 +41,7 @@ export const products: Product[] = [
     name: "Maroon Muse Bow Top",
     price: 899,
     description:
-      "Add a touch of elegance to your wardrobe with the Maroon Muse Bow Top. Crafted in a rich maroon shade, this top features delicate bow-tie sleeves that bring a subtle yet stylish charm. Made from soft cotton fabric, it is lightweight, breathable, and designed for all-day comfort—perfect for both casual outings and refined everyday looks.",
+      "Add a touch of elegance to your wardrobe with the Maroon Muse Bow Top. Crafted in a rich maroon shade, this top features delicate bow-tie sleeves that bring a subtle yet stylish charm. Made from soft cotton fabric, it is lightweight, breathable, and designed for all-day comfort-perfect for both casual outings and refined everyday looks.",
     details: [
       "Made from premium cotton fabric",
       "Lightweight and breathable for everyday wear",
@@ -62,18 +62,22 @@ export const products: Product[] = [
   },
   {
     id: "3",
-    name: "Structured Blazer",
-    price: 6200,
-    description: "Crisp tailoring with a sharp silhouette for day-to-night styling.",
+    name: "Midnight Charm Bow Top",
+    price: 899,
+    description:
+      "Elevate your everyday style with the Midnight Charm Bow Top. Designed in a timeless black shade, this top features elegant bow-tie sleeves that add a subtle touch of sophistication. Crafted from soft cotton fabric, it is lightweight, breathable, and ensures all-day comfort-perfect for both casual outings and effortlessly chic looks.",
     details: [
-      "Fine woven suiting fabric",
-      "Fully lined for smooth wear",
-      "Classic two-button closure",
+      "Made from premium cotton fabric",
+      "Lightweight and breathable for all-day wear",
+      "Soft and comfortable on the skin",
+      "Elegant bow-tie sleeve detailing",
+      "Classic black color for a timeless look",
+      "Ideal for casual and semi-formal styling",
     ],
     care: [
-      "Dry clean only",
-      "Avoid direct heat",
-      "Store on a wide hanger",
+      "Machine wash cold",
+      "Do not bleach",
+      "Iron on low heat",
     ],
     delivery: "Made-to-order. Ships in 15-20 days.",
     images: ["/products/p3-1.jpg", "/products/p3-2.jpg", "/products/p3-3.jpg"],
@@ -82,18 +86,23 @@ export const products: Product[] = [
   },
   {
     id: "4",
-    name: "Sequin Party Top",
-    price: 3800,
-    description: "Statement sparkle with a soft lining for comfortable evenings.",
+    name: "Marigold Muse Co-ord Set",
+    price: 1499,
+    description:
+      "Brighten your wardrobe with the Marigold Muse Co-ord Set, crafted in beautiful yellow Hakoba fabric. Featuring delicate eyelet embroidery and intricate cutwork, this set blends elegance with everyday comfort. The lightweight and breathable cotton fabric keeps you cool, while the coordinated design offers a stylish, effortlessly put-together look-perfect for casual outings, brunch dates, or festive days.",
     details: [
-      "Hand-placed sequins",
-      "Smooth inner lining",
-      "Adjustable shoulder ties",
+      "Made from premium Hakoba cotton fabric",
+      "Intricate eyelet embroidery with detailed cutwork",
+      "Lightweight and breathable for all-day comfort",
+      "Soft, airy, and skin-friendly fabric",
+      "Co-ordinated top and bottom set",
+      "Fresh marigold yellow shade for a vibrant look",
+      "Ideal for casual, festive, and summer wear",
     ],
     care: [
-      "Spot clean only",
-      "Lay flat to dry",
-      "Avoid rubbing or wringing",
+      "Gentle machine wash or hand wash recommended",
+      "Do not bleach",
+      "Iron on low heat",
     ],
     delivery: "Made-to-order. Ships in 15-20 days.",
     images: ["/products/p4-1.jpg", "/products/p4-2.jpg", "/products/p4-3.jpg"],
@@ -111,12 +120,12 @@ export const products: Product[] = [
       "Soft breathable lining",
     ],
     care: [
-      "Dry clean only",
+      "Machine wash cold",
       "Cool iron if needed",
       "Store folded or hung",
     ],
     delivery: "Made-to-order. Ships in 15-20 days.",
-    images: ["/products/p5-1.jpg", "/products/p5-2.jpg", "/products/p5-3.jpg"],
+    images: ["/products/p5-2.jpg", "/products/p5-1.jpg", "/products/p5-3.jpg"],
     sizes: ["S", "M", "L", "XL", "Custom"],
     fit: ["Regular", "Oversized"],
   },
@@ -125,7 +134,7 @@ export const products: Product[] = [
     name: "Lavender Blossom Co-ord Set",
     price: 1499,
     description:
-      "Step into soft elegance with the Lavender Blossom Co-ord Set, crafted in delicate Hakoba fabric. Featuring intricate eyelet embroidery and detailed cutwork, this set brings a graceful, feminine charm to your wardrobe. The lightweight and breathable cotton ensures all-day comfort, while the soothing lavender hue adds a fresh, dreamy vibe—perfect for brunches, vacations, and effortless everyday styling.",
+      "Step into soft elegance with the Lavender Blossom Co-ord Set, crafted in delicate Hakoba fabric. Featuring intricate eyelet embroidery and detailed cutwork, this set brings a graceful, feminine charm to your wardrobe. The lightweight and breathable cotton ensures all-day comfort, while the soothing lavender hue adds a fresh, dreamy vibe-perfect for brunches, vacations, and effortless everyday styling.",
     details: [
       "Made from premium Hakoba cotton fabric",
       "Intricate eyelet embroidery with fine cutwork detailing",
@@ -266,3 +275,9 @@ export const products: Product[] = [
     fit: ["Regular", "Oversized"],
   },
 ];
+
+
+
+
+
+

@@ -54,6 +54,7 @@ export default function AboutPage() {
                   src="/story.jpg"
                   alt="founders"
                   fill
+                  sizes="(max-width: 768px) 260px, 320px"
                   className="object-contain bg-[#f5efe6] p-3 transition duration-700"
                 />
 

@@ -7,6 +7,7 @@ import { useCart } from "@/features/cart/cart.context";
 import type { Product } from "@/features/products/product.types";
 
 export default function ProductDetailClient({ product }: { product: Product }) {
+  const useUnoptimizedImage = process.env.NODE_ENV !== "production";
   const router = useRouter();
   const { addToCart } = useCart();
   const [selectedImage, setSelectedImage] = useState(0);
@@ -49,7 +50,14 @@ export default function ProductDetailClient({ product }: { product: Product }) {
                   selectedImage === index ? "border-black" : "border-gray-200"
                 }`}
               >
-                <Image src={src} alt={`${product.name} thumbnail ${index + 1}`} fill className="object-cover" />
+                <Image
+                  src={src}
+                  alt={`${product.name} thumbnail ${index + 1}`}
+                  fill
+                  unoptimized={useUnoptimizedImage}
+                  sizes="80px"
+                  className="object-cover"
+                />
               </button>
             ))}
           </div>
@@ -59,6 +67,9 @@ export default function ProductDetailClient({ product }: { product: Product }) {
               src={product.images[selectedImage]}
               alt={`${product.name} image ${selectedImage + 1}`}
               fill
+              unoptimized={useUnoptimizedImage}
+              sizes="(max-width: 768px) 100vw, 50vw"
+              loading="eager"
               className="object-cover"
             />
           </div>

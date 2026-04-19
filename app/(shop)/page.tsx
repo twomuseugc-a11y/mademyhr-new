@@ -6,10 +6,10 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useLayoutEffect, useEffect, useState } from "react";
 import ProductGrid from "@/components/product/ProductGrid";
 import Footer from "@/components/layout/Footer";
-import { getCatalogProducts } from "@/features/products/product.service";
+import { useProducts } from "@/hooks/useProducts";
 
 export default function Home() {
-  const products = getCatalogProducts();
+  const products = useProducts();
   const heroProducts = products.slice(0, 3);
   const prefersReducedMotion = useReducedMotion();
   const rotatingLines = [

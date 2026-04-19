@@ -1,7 +1,9 @@
 import ProductGrid from "@/components/product/ProductGrid";
 import { getCatalogProducts } from "@/features/products/product.service";
+import { unstable_noStore as noStore } from "next/cache";
 
 export default function ProductPage() {
+  noStore();
   const products = getCatalogProducts();
 
   return (
@@ -10,7 +12,7 @@ export default function ProductPage() {
         <div className="mb-12">
           <h1 className="text-4xl font-light text-[#111111]">All Outfits</h1>
           <p className="mt-3 text-gray-600 max-w-2xl">
-            Browse all 12 outfits, choose your size, and customize your fit.
+            Browse all 13 outfits, choose your size, and customize your fit.
           </p>
         </div>
 

@@ -1,12 +1,20 @@
-"use client";
-
-import { useParams } from "next/navigation";
 import { getCatalogProducts, getProductById } from "@/features/products/product.service";
 import ProductDetailClient from "./ProductDetailClient";
+import { unstable_noStore as noStore } from "next/cache";
 
-export default function ProductPage() {
-  const params = useParams();
-  const requestedId = params?.product ? String(params.product) : "";
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
+type ProductPageProps = {
+  params: Promise<{
+    product?: string;
+  }>;
+};
+
+export default async function ProductPage({ params }: ProductPageProps) {
+  noStore();
+  const resolvedParams = await params;
+  const requestedId = resolvedParams?.product ? String(resolvedParams.product) : "";
   const product = getProductById(requestedId);
   const products = getCatalogProducts();
 

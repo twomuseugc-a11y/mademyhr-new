@@ -12,6 +12,8 @@ type ProductCardProps = {
 };
 
 export default function ProductCard({ product }: ProductCardProps) {
+  const useUnoptimizedImage = process.env.NODE_ENV !== "production";
+
   return (
     <motion.div variants={fadeUp} initial={false} animate="visible" {...hoverScale}>
       <Link
@@ -23,6 +25,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             src={product.images[0]}
             alt={product.name}
             fill
+            unoptimized={useUnoptimizedImage}
             sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
             className="object-cover transition duration-500 group-hover:scale-105"
             priority={false}
