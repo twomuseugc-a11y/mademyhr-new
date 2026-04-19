@@ -64,6 +64,7 @@ const statusSections = [
   { key: "ready", title: "📦 Ready", statuses: ["ready"] },
   { key: "dispatched", title: "🚚 Dispatched", statuses: ["dispatched"] },
   { key: "delivered", title: "✅ Delivered", statuses: ["delivered"] },
+  { key: "returns", title: "↩️ Returns & Refunds", statuses: ["return", "refund"] },
 ];
 
 export default function AdminPage() {
