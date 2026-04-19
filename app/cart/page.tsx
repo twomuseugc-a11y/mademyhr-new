@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useCart } from "../context/CartContext";
+import { useCart } from "@/features/cart/cart.context";
 
 // ✅ ADD TYPE (VERY IMPORTANT)
 type CartItem = {

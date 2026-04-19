@@ -16,7 +16,10 @@ export async function POST(request: NextRequest) {
     const adminUsername = process.env.ADMIN_USERNAME;
     const adminPassword = process.env.ADMIN_PASSWORD;
 
+    console.log("Admin login attempt:", { username, adminUsername: !!adminUsername, adminPassword: !!adminPassword });
+
     if (!adminUsername || !adminPassword) {
+      console.error("Missing admin credentials in env");
       return NextResponse.json(
         { message: "Server configuration error" },
         { status: 500 }

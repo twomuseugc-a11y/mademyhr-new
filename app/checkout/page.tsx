@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { useCart } from "../context/CartContext";
+import { useState, useEffect } from "react";
+import { useCart } from "@/features/cart/cart.context";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 
@@ -14,6 +14,11 @@ declare global {
 export default function CheckoutPage() {
   const { cart, clearCart } = useCart();
   const router = useRouter();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true); // eslint-disable-line react-hooks/set-state-in-effect
+  }, []);
 
   const [form, setForm] = useState({
     name: "",
@@ -58,7 +63,7 @@ export default function CheckoutPage() {
 
       // ✅ RAZORPAY OPTIONS
       const options = {
-        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || "rzp_live_SfL4kPW4YxLS1G",
         amount: order.amount,
         currency: "INR",
         name: "madebyhr",
@@ -207,56 +212,58 @@ Total: ₹${total}
         </div>
 
         {/* RIGHT - SUMMARY */}
-        <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 h-fit">
+        {mounted && (
+          <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 h-fit">
 
-          <h2 className="text-lg font-medium text-[#1a1a1a] mb-6">
-            Order Summary
-          </h2>
+            <h2 className="text-lg font-medium text-[#1a1a1a] mb-6">
+              Order Summary
+            </h2>
 
-          <div className="space-y-4 text-sm text-[#3a3a3a]">
+            <div className="space-y-4 text-sm text-[#3a3a3a]">
 
-            {cart.map((item: any, index: number) => ( // eslint-disable-line @typescript-eslint/no-explicit-any
-              <div key={index} className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-                {item.image && (
-                  <Image
-                    src={item.image}
-                    alt={item.name}
-                    width={48}
-                    height={48}
-                    className="w-12 h-12 rounded-lg object-cover"
-                  />
-                )}
-                <div className="flex-1">
-                  <p className="font-medium text-[#1a1a1a]">{item.name}</p>
-                  <p className="text-xs text-gray-600">
-                    Size: {item.size}, Fit: {item.fit} × {item.quantity}
-                  </p>
+              {cart.map((item: any, index: number) => ( // eslint-disable-line @typescript-eslint/no-explicit-any
+                <div key={index} className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                  {item.image && (
+                    <Image
+                      src={item.image}
+                      alt={item.name}
+                      width={48}
+                      height={48}
+                      className="w-12 h-12 rounded-lg object-cover"
+                    />
+                  )}
+                  <div className="flex-1">
+                    <p className="font-medium text-[#1a1a1a]">{item.name}</p>
+                    <p className="text-xs text-gray-600">
+                      Size: {item.size}, Fit: {item.fit} × {item.quantity}
+                    </p>
+                  </div>
+                  <span className="font-medium">₹{item.price * item.quantity}</span>
                 </div>
-                <span className="font-medium">₹{item.price * item.quantity}</span>
-              </div>
-            ))}
+              ))}
+
+            </div>
+
+            <div className="border-t border-gray-200 my-6"></div>
+
+            <div className="flex justify-between text-lg font-medium text-[#1a1a1a]">
+              <span>Total</span>
+              <span>₹{mounted ? total : 0}</span>
+            </div>
+
+            <button
+              onClick={handlePayment}
+              className="mt-6 w-full bg-[#b88a5a] text-white py-3 rounded-full tracking-wide hover:opacity-90 active:scale-95 transition"
+            >
+              Proceed to Payment
+            </button>
+
+            <p className="text-xs text-[#4a4a4a] mt-3 text-center leading-relaxed">
+              Secure checkout powered by Razorpay.
+            </p>
 
           </div>
-
-          <div className="border-t border-gray-200 my-6"></div>
-
-          <div className="flex justify-between text-lg font-medium text-[#1a1a1a]">
-            <span>Total</span>
-            <span>₹{total}</span>
-          </div>
-
-          <button
-            onClick={handlePayment}
-            className="mt-6 w-full bg-[#b88a5a] text-white py-3 rounded-full tracking-wide hover:opacity-90 active:scale-95 transition"
-          >
-            Proceed to Payment
-          </button>
-
-          <p className="text-xs text-[#4a4a4a] mt-3 text-center leading-relaxed">
-            Secure checkout powered by Razorpay.
-          </p>
-
-        </div>
+        )}
 
       </div>
 

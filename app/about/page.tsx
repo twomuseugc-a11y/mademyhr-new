@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import FadeIn from "../components/FadeIn";
+import FadeIn from "@/components/animations/FadeIn";
 
 export default function AboutPage() {
   return (
@@ -70,19 +70,80 @@ export default function AboutPage() {
               </h2>
 
               <p className="text-gray-600 text-sm leading-relaxed">
-                madebyhr began with two best friends who believed clothing should feel more personal.
+                madebyhr - from code to cloth
               </p>
 
               <p className="mt-4 text-gray-600 text-sm leading-relaxed">
-                In a world of fast fashion, we chose to slow things down — creating pieces that are made only when you choose them.
+                We are not a big brand.
+                We did not start with funding, factories, or a team.
               </p>
 
               <p className="mt-4 text-gray-600 text-sm leading-relaxed">
-                When something is designed and tailored for you, the feeling is different — more intentional, more personal, more yours.
+                We started with an idea.
               </p>
 
               <p className="mt-4 text-gray-600 text-sm leading-relaxed">
-                madebyhr is about that feeling — effortless, premium, and quietly confident.
+                Two school friends, who somehow ended up in the same engineering college, studying Computer Science. Between assignments, coding nights, and endless conversations about the future, one thing kept coming back -
+                &quot;What if we build something of our own?&quot;
+              </p>
+
+              <p className="mt-4 text-gray-600 text-sm leading-relaxed">
+                That is where madebyhr began.
+              </p>
+
+              <p className="mt-4 text-gray-600 text-sm leading-relaxed">
+                We did not have a big budget.
+                We did not want to take big risks with unsold stock.
+                And we did not want to create just another clothing brand.
+              </p>
+
+              <p className="mt-4 text-gray-600 text-sm leading-relaxed">
+                So we decided to build it differently.
+              </p>
+
+              <p className="mt-4 text-gray-600 text-sm leading-relaxed">
+                We combined what we know - technology - with what we love - design and clothing.
+              </p>
+
+              <p className="mt-4 text-gray-600 text-sm leading-relaxed">
+                Using AI as a creative tool, we started designing pieces that are unique, minimal, and expressive. But every design does not stop at AI - we carefully refine, select, and bring it to life ourselves.
+              </p>
+
+              <p className="mt-4 text-gray-600 text-sm leading-relaxed">
+                Each product you see here is not mass-produced.
+                It is made only when you order it.
+              </p>
+
+              <p className="mt-4 text-gray-600 text-sm leading-relaxed">
+                No extra inventory.
+                No waste.
+                No unnecessary production.
+              </p>
+
+              <p className="mt-4 text-gray-600 text-sm leading-relaxed">
+                Just something made specifically for you.
+              </p>
+
+              <p className="mt-4 text-gray-600 text-sm leading-relaxed">
+                We know that trusting a new brand is not easy - especially when everything is online.
+                That is why we believe in being transparent.
+              </p>
+
+              <p className="mt-4 text-gray-600 text-sm leading-relaxed">
+                From design to delivery, we are building this brand in the open - sharing our journey, our process, and every step we take.
+              </p>
+
+              <p className="mt-4 text-gray-600 text-sm leading-relaxed">
+                When you support madebyhr, you are not just buying clothing.
+                You are supporting two students building something from scratch - with limited resources, but unlimited ideas.
+              </p>
+
+              <p className="mt-4 text-gray-600 text-sm leading-relaxed">
+                This is just the beginning.
+              </p>
+
+              <p className="mt-4 text-gray-600 text-sm leading-relaxed">
+                - Team madebyhr
               </p>
 
             </div>
