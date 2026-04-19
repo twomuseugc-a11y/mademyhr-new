@@ -52,7 +52,7 @@ export const products: Product[] = [
       "Iron on low heat",
     ],
     delivery: "Made-to-order. Ships in 15-20 days.",
-    images: ["/products/p1-1.jpg", "/products/p1-2.jpg", "/products/p1-3.jpg"],
+    images: ["/products/p2-1.jpg", "/products/p2-2.jpg", "/products/p2-3.jpg"],
     sizes: ["S", "M", "L", "XL", "Custom"],
     fit: ["Regular", "Oversized"],
   },
