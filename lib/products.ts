@@ -35,9 +35,9 @@ export const products: Product[] = [
   {
     id: "2",
     name: "Elara Bottle Bloom Bow Top",
-    price: 20,
+    price: 899,
     description:
-      "Elevate your everyday style with the Elara Bottle Bloom Bow Top, crafted in a rich bottle green shade. Designed with elegant bow-tie sleeves, this top blends charm with comfort. Made from soft cotton fabric, it feels lightweight, breathable, and perfect for all-day wear, whether you're dressing up or keeping it casual.",
+      "Elevate your everyday style with the Elara Bottle Bloom Bow Top, crafted in a rich bottle green shade. Designed with elegant bow-tie sleeves, this top blends charm with comfort. Made from soft cotton fabric, it feels lightweight, breathable, and perfect for all-day wear—whether you're dressing up or keeping it casual.",
     details: [
       "Premium cotton fabric",
       "Lightweight and breathable",
@@ -52,7 +52,7 @@ export const products: Product[] = [
       "Iron on low heat",
     ],
     delivery: "Made-to-order. Ships in 15-20 days.",
-    images: ["/products/p2-1.jpg", "/products/p2-2.jpg", "/products/p2-3.jpg"],
+    images: ["/products/p1-1.jpg", "/products/p1-2.jpg", "/products/p1-3.jpg"],
     sizes: ["S", "M", "L", "XL", "Custom"],
     fit: ["Regular", "Oversized"],
   },
