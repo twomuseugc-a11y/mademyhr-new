@@ -41,10 +41,8 @@ export async function GET() {
   } catch (error) {
     console.error("GET ORDERS ERROR:", error);
 
-    return NextResponse.json(
-      { error: "Failed to fetch orders", orders: [] },
-      { status: 500 }
-    );
+    // Return empty array instead of error to prevent admin panel crash
+    return NextResponse.json([]);
   }
 }
 
