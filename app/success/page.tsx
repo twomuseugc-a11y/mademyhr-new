@@ -1,11 +1,10 @@
 "use client";
 
+import { Suspense } from "react";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation"; // ✅ ADDED
+import { useSearchParams } from "next/navigation";
 
-export default function SuccessPage() {
-
-  // ✅ ADDED
+function SuccessContent() {
   const searchParams = useSearchParams();
   const msg = searchParams.get("msg");
   const phone = searchParams.get("phone");
@@ -53,7 +52,7 @@ export default function SuccessPage() {
             Continue Shopping
           </Link>
 
-          {/* ✅ UPDATED WHATSAPP BUTTON */}
+          {/* WHATSAPP BUTTON */}
           <a
             href={whatsappLink}
             target="_blank"
@@ -67,5 +66,13 @@ export default function SuccessPage() {
       </div>
 
     </div>
+  );
+}
+
+export default function SuccessPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-[#f5efe7]" />}>
+      <SuccessContent />
+    </Suspense>
   );
 }

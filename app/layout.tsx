@@ -1,8 +1,8 @@
 "use client";
 
 import "./globals.css";
-import Navbar from "./components/Navbar";
-import { CartProvider } from "./context/CartContext";
+import Navbar from "@/components/layout/Navbar";
+import { CartProvider } from "@/features/cart/cart.context";
 import type { ReactNode } from "react";
 import Script from "next/script"; // ✅ ADD THIS
 
