@@ -17,14 +17,14 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.mademyhr.in"),
+  metadataBase: new URL("https://www.madebyhr.in"),
   title: "MadeByHR – Custom Clothing India",
   description: "Premium made-to-order clothing brand in India. Designed for you.",
   keywords: ["custom clothing India", "made to order outfits", "premium streetwear India"],
   openGraph: {
     title: "MadeByHR – Custom Clothing India",
     description: "Premium made-to-order clothing brand in India. Designed for you.",
-    url: "https://www.mademyhr.in",
+    url: "https://www.madebyhr.in",
     siteName: "MadeByHR",
     type: "website",
   },
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     follow: true,
   },
   alternates: {
-    canonical: "https://www.mademyhr.in",
+    canonical: "https://www.madebyhr.in",
   },
   verification: {
     google: "JAk2YgEaObB3Fy-dCkJmHtLGTRRQQHjjYYAvFtCvP5U"
@@ -44,7 +44,7 @@ const organizationJsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
   name: "MadeByHR",
-  url: "https://www.mademyhr.in",
+  url: "https://www.madebyhr.in",
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
