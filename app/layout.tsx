@@ -1,12 +1,8 @@
-"use client";
-
 import "./globals.css";
-import Navbar from "@/components/layout/Navbar";
-import { CartProvider } from "@/features/cart/cart.context";
-import { AnimatePresence, MotionConfig, motion } from "framer-motion";
-import { useEffect, type ReactNode } from "react";
-import { usePathname } from "next/navigation";
 import Script from "next/script"; // ✅ ADD THIS
+import type { Metadata } from "next";
+import type { ReactNode } from "react";
+import RootShell from "@/components/layout/RootShell";
 
 import { Playfair_Display, Inter } from "next/font/google";
 
@@ -20,44 +16,50 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
+export const metadata: Metadata = {
+  metadataBase: new URL("https://www.mademyhr.in"),
+  title: "MadeByHR – Custom Clothing India",
+  description: "Premium made-to-order clothing brand in India. Designed for you.",
+  keywords: ["custom clothing India", "made to order outfits", "premium streetwear India"],
+  openGraph: {
+    title: "MadeByHR – Custom Clothing India",
+    description: "Premium made-to-order clothing brand in India. Designed for you.",
+    url: "https://www.mademyhr.in",
+    siteName: "MadeByHR",
+    type: "website",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  alternates: {
+    canonical: "https://www.mademyhr.in",
+  },
+};
+
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "MadeByHR",
+  url: "https://www.mademyhr.in",
+};
+
 export default function RootLayout({ children }: { children: ReactNode }) {
-  const pathname = usePathname();
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    if ("scrollRestoration" in window.history) {
-      window.history.scrollRestoration = "manual";
-    }
-
-    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
-  }, [pathname]);
+  const jsonLd = JSON.stringify(organizationJsonLd);
 
   return (
     <html lang="en" data-scroll-behavior="smooth">
+      <head>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd }} />
+      </head>
       <body className={`${playfair.variable} ${inter.variable}`}>
-
         {/* ✅ CORRECT WAY */}
         <Script
           src="https://checkout.razorpay.com/v1/checkout.js"
           strategy="afterInteractive"
         />
 
-        <MotionConfig reducedMotion="user">
-          <CartProvider>
-            <Navbar />
-            <AnimatePresence mode="sync" initial={false}>
-              <motion.main
-                key={pathname}
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.18, ease: "easeOut" }}
-              >
-                {children}
-              </motion.main>
-            </AnimatePresence>
-          </CartProvider>
-        </MotionConfig>
+        <RootShell>{children}</RootShell>
 
       </body>
     </html>
