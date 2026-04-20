@@ -17,6 +17,7 @@ type CartItem = {
 
 export default function CartPage() {
   const router = useRouter();
+  const DELIVERY_CHARGE = 99;
 
   const { cart, increaseQty, decreaseQty, removeItem } = useCart();
 
@@ -25,6 +26,8 @@ export default function CartPage() {
     (sum: number, item: CartItem) => sum + item.price * item.quantity,
     0
   );
+  const delivery = cart.length > 0 ? DELIVERY_CHARGE : 0;
+  const finalTotal = total + delivery;
 
   return (
     <div className="min-h-screen bg-[#f5efe7] px-6 py-16">
@@ -156,9 +159,19 @@ export default function CartPage() {
 
           <div className="border-t border-gray-200 my-6"></div>
 
-          <div className="flex justify-between text-lg font-medium text-[#1a1a1a]">
-            <span>Total</span>
+          <div className="flex justify-between text-sm text-[#3a3a3a]">
+            <span>Subtotal</span>
             <span>₹{total}</span>
+          </div>
+
+          <div className="flex justify-between text-sm text-[#3a3a3a]">
+            <span>Delivery</span>
+            <span>₹{delivery}</span>
+          </div>
+
+          <div className="mt-2 flex justify-between text-lg font-medium text-[#1a1a1a]">
+            <span>Total</span>
+            <span>₹{finalTotal}</span>
           </div>
 
           <button

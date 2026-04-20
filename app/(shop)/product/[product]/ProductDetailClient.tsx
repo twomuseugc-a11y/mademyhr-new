@@ -46,7 +46,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
                 key={src}
                 type="button"
                 onClick={() => setSelectedImage(index)}
-                className={`relative w-20 h-24 rounded-2xl overflow-hidden border transition ${
+                className={`relative w-20 h-24 rounded-2xl overflow-hidden border transition hover:-translate-y-0.5 hover:scale-[1.02] active:scale-[0.99] ${
                   selectedImage === index ? "border-black" : "border-gray-200"
                 }`}
               >
@@ -62,7 +62,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
             ))}
           </div>
 
-          <div className="relative w-full h-[560px] rounded-[32px] overflow-hidden border border-gray-200">
+          <div className="relative w-full h-[560px] rounded-[32px] overflow-hidden border border-gray-200 shadow-[0_18px_42px_rgba(17,17,17,0.08)]">
             <Image
               src={product.images[selectedImage]}
               alt={`${product.name} image ${selectedImage + 1}`}
@@ -70,7 +70,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
               unoptimized={useUnoptimizedImage}
               sizes="(max-width: 768px) 100vw, 50vw"
               loading="eager"
-              className="object-cover"
+              className="object-cover transition duration-700 ease-out hover:scale-[1.02]"
             />
           </div>
         </div>
@@ -79,7 +79,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
           <div>
             <h1 className="text-4xl md:text-5xl font-light text-[#111111] mb-4">{product.name}</h1>
             <p className="text-2xl font-semibold text-[#111111] mb-4">₹{product.price}</p>
-            <p className="text-[#4a4a4a] leading-relaxed">{product.description}</p>
+            <p className="text-[#4a4a4a] leading-[1.72]">{product.description}</p>
           </div>
 
           <div className="space-y-6">
@@ -91,7 +91,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
                     key={size}
                     type="button"
                     onClick={() => setSelectedSize(size)}
-                    className={`px-5 py-3 rounded-full border text-sm transition ${
+                    className={`px-5 py-3 rounded-full border text-sm transition hover:-translate-y-0.5 active:scale-[0.99] ${
                       selectedSize === size
                         ? "bg-black text-white border-black"
                         : "bg-white text-gray-700 border-gray-300 hover:border-black"
@@ -119,7 +119,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
                     key={fitOption}
                     type="button"
                     onClick={() => setSelectedFit(fitOption)}
-                    className={`px-5 py-3 rounded-full border text-sm transition ${
+                    className={`px-5 py-3 rounded-full border text-sm transition hover:-translate-y-0.5 active:scale-[0.99] ${
                       selectedFit === fitOption
                         ? "bg-black text-white border-black"
                         : "bg-white text-gray-700 border-gray-300 hover:border-black"
@@ -134,7 +134,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
             <button
               type="button"
               onClick={handleAddToCart}
-              className="w-full bg-[#b88a5a] text-white rounded-full py-4 text-sm font-semibold tracking-wide hover:opacity-90 transition"
+              className="w-full rounded-full border border-black/5 bg-[#111111] py-4 text-sm font-semibold tracking-wide text-white shadow-[0_12px_28px_rgba(0,0,0,0.14)] transition hover:-translate-y-0.5 hover:bg-[#1b1b1b] hover:shadow-[0_18px_34px_rgba(0,0,0,0.2)] active:scale-[0.99]"
             >
               Add to Cart
             </button>
@@ -144,7 +144,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
             {(product.details?.length || product.care?.length || product.delivery) && (
               <div className="space-y-3 border-t border-gray-200 pt-6">
                 {product.details?.length ? (
-                  <div className="rounded-2xl border border-[#ded6cc] bg-white/80">
+                  <div className="rounded-2xl border border-[#ded6cc] bg-white/80 shadow-[0_10px_24px_rgba(17,17,17,0.05)] transition hover:-translate-y-0.5 hover:shadow-[0_16px_30px_rgba(17,17,17,0.08)]">
                     <button
                       type="button"
                       onClick={() => setOpenPanel((prev) => (prev === "details" ? null : "details"))}
@@ -164,7 +164,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
                 ) : null}
 
                 {product.care?.length ? (
-                  <div className="rounded-2xl border border-[#ded6cc] bg-white/80">
+                  <div className="rounded-2xl border border-[#ded6cc] bg-white/80 shadow-[0_10px_24px_rgba(17,17,17,0.05)] transition hover:-translate-y-0.5 hover:shadow-[0_16px_30px_rgba(17,17,17,0.08)]">
                     <button
                       type="button"
                       onClick={() => setOpenPanel((prev) => (prev === "care" ? null : "care"))}
@@ -184,7 +184,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
                 ) : null}
 
                 {product.delivery ? (
-                  <div className="rounded-2xl border border-[#ded6cc] bg-white/80">
+                  <div className="rounded-2xl border border-[#ded6cc] bg-white/80 shadow-[0_10px_24px_rgba(17,17,17,0.05)] transition hover:-translate-y-0.5 hover:shadow-[0_16px_30px_rgba(17,17,17,0.08)]">
                     <button
                       type="button"
                       onClick={() => setOpenPanel((prev) => (prev === "delivery" ? null : "delivery"))}

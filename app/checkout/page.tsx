@@ -15,6 +15,7 @@ export default function CheckoutPage() {
   const { cart, clearCart } = useCart();
   const router = useRouter();
   const [mounted, setMounted] = useState(false);
+  const DELIVERY_CHARGE = 99;
 
   useEffect(() => {
     setMounted(true); // eslint-disable-line react-hooks/set-state-in-effect
@@ -37,6 +38,8 @@ export default function CheckoutPage() {
     (sum: number, item: any) => sum + item.price * item.quantity, // eslint-disable-line @typescript-eslint/no-explicit-any
     0
   );
+  const delivery = cart.length > 0 ? DELIVERY_CHARGE : 0;
+  const finalTotal = total + delivery;
 
   const handlePayment = async () => {
     if (!form.name || !form.phone || !form.address || !form.email) {
@@ -51,7 +54,7 @@ export default function CheckoutPage() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ amount: total }),
+        body: JSON.stringify({ amount: finalTotal }),
       });
 
       const order = await res.json();
@@ -61,9 +64,15 @@ export default function CheckoutPage() {
         return;
       }
 
+      const razorpayKey = process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID;
+      if (!razorpayKey) {
+        alert("Payment configuration is missing. Please contact support.");
+        return;
+      }
+
       // ✅ RAZORPAY OPTIONS
       const options = {
-        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || "rzp_live_SfL4kPW4YxLS1G",
+        key: razorpayKey,
         amount: order.amount,
         currency: "INR",
         name: "madebyhr",
@@ -101,7 +110,8 @@ export default function CheckoutPage() {
               body: JSON.stringify({
                 customer: form,
                 items: cart,
-                total,
+                total: finalTotal,
+                deliveryCharge: delivery,
                 paymentId: response.razorpay_payment_id,
                 orderId: response.razorpay_order_id,
                 status: "paid",
@@ -114,7 +124,8 @@ export default function CheckoutPage() {
               JSON.stringify({
                 name: form.name,
                 phone: form.phone,
-                total,
+                total: finalTotal,
+                delivery,
                 items: cart,
               })
             );
@@ -137,7 +148,7 @@ ${cart
   )
   .join("\n")}
 
-Total: ₹${total}
+Total: ₹${finalTotal}
 `;
 
             const encodedMessage = encodeURIComponent(message);
@@ -246,9 +257,20 @@ Total: ₹${total}
 
             <div className="border-t border-gray-200 my-6"></div>
 
-            <div className="flex justify-between text-lg font-medium text-[#1a1a1a]">
+            <div className="space-y-2 text-sm text-[#3a3a3a]">
+              <div className="flex justify-between">
+                <span>Subtotal</span>
+                <span>₹{mounted ? total : 0}</span>
+              </div>
+              <div className="flex justify-between">
+                <span>Delivery</span>
+                <span>₹{mounted ? delivery : 0}</span>
+              </div>
+            </div>
+
+            <div className="mt-3 flex justify-between text-lg font-medium text-[#1a1a1a]">
               <span>Total</span>
-              <span>₹{mounted ? total : 0}</span>
+              <span>₹{mounted ? finalTotal : 0}</span>
             </div>
 
             <button

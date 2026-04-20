@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import ProductCard from "@/components/product/ProductCard";
-import { stagger } from "@/components/animations/stagger";
 import type { Product } from "@/features/products/product.types";
 
 type ProductGridProps = {
@@ -13,10 +12,11 @@ type ProductGridProps = {
 export default function ProductGrid({ products, className = "" }: ProductGridProps) {
   return (
     <motion.div
-      className={`grid gap-8 md:grid-cols-2 xl:grid-cols-3 ${className}`}
-      variants={stagger}
-      initial={false}
-      animate="visible"
+      className={`grid gap-10 md:grid-cols-2 xl:grid-cols-3 ${className}`}
+      initial={{ opacity: 0, y: 10 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.12 }}
+      transition={{ duration: 0.2, ease: "easeOut" }}
     >
       {products.map((product) => (
         <ProductCard key={product.id} product={product} />

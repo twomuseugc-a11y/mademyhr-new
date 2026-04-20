@@ -28,7 +28,7 @@ export default function Navbar() {
   );
 
   return (
-    <nav className="bg-black text-white px-6 md:px-12 py-5 flex items-center justify-between sticky top-0 z-50 border-b border-white/10">
+    <nav className="sticky top-0 z-50 flex items-center justify-between border-b border-white/10 bg-black/82 px-6 py-4 text-white backdrop-blur-sm md:px-12">
       <Link href="/" className="flex items-center">
         <Image
           src="/logo.png"
@@ -36,18 +36,18 @@ export default function Navbar() {
           width={120}
           height={40}
           priority
-          className="hover:opacity-80 transition duration-300"
+          className="transition duration-300 hover:scale-[1.02] hover:opacity-85"
         />
       </Link>
 
       <div className="hidden md:flex gap-12 text-[13px] tracking-[0.15em] uppercase">
-        <Link href="/about" className="relative group">
+        <Link href="/about" className="nav-link relative group">
           About
-          <span className="absolute left-0 -bottom-1 w-0 h-[1px] bg-white/80 transition-all duration-300 group-hover:w-full" />
+          <span className="absolute left-0 -bottom-1 h-[1px] w-full origin-left scale-x-0 bg-white/85 transition-transform duration-300 group-hover:scale-x-100" />
         </Link>
-        <Link href="/product" className="relative group">
+        <Link href="/product" className="nav-link relative group">
           Shop
-          <span className="absolute left-0 -bottom-1 w-0 h-[1px] bg-white/80 transition-all duration-300 group-hover:w-full" />
+          <span className="absolute left-0 -bottom-1 h-[1px] w-full origin-left scale-x-0 bg-white/85 transition-transform duration-300 group-hover:scale-x-100" />
         </Link>
       </div>
 
@@ -58,18 +58,18 @@ export default function Navbar() {
             placeholder="Search"
             value={search}
             onChange={(event) => setSearch(event.target.value)}
-            className="bg-white text-black text-sm px-4 py-2 rounded-full outline-none w-[120px] focus:w-[220px] transition-all duration-300 shadow-sm"
+            className="w-[120px] rounded-full border border-white/15 bg-white/95 px-4 py-2 text-sm text-black outline-none transition-all duration-300 focus:w-[220px] focus:border-white/30 focus:shadow-[0_12px_30px_rgba(0,0,0,0.18)]"
           />
 
           {search && (
-            <div className="absolute top-12 right-0 bg-white text-black w-64 rounded-xl shadow-xl overflow-hidden z-50">
+            <div className="absolute right-0 top-12 z-50 w-64 overflow-hidden rounded-2xl border border-black/5 bg-white text-black shadow-[0_18px_40px_rgba(0,0,0,0.16)]">
               {filtered.length > 0 ? (
                 filtered.slice(0, 6).map((item) => (
                   <Link
                     key={item.link}
                     href={item.link}
                     onClick={() => setSearch("")}
-                    className="block px-4 py-3 text-sm hover:bg-[#f5efe6]"
+                    className="block px-4 py-3 text-sm transition hover:bg-[#f5efe6]"
                   >
                     {item.name}
                   </Link>
@@ -81,17 +81,17 @@ export default function Navbar() {
           )}
         </div>
 
-        <Link href="/cart" className="text-lg hover:scale-110 transition">
+        <Link href="/cart" className="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-lg transition hover:-translate-y-0.5 hover:bg-white/10 hover:shadow-[0_10px_24px_rgba(0,0,0,0.15)]">
           🛒
         </Link>
 
-        <button className="md:hidden text-2xl" onClick={() => setMenuOpen((prev) => !prev)}>
+        <button className="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-2xl transition hover:bg-white/10 md:hidden" onClick={() => setMenuOpen((prev) => !prev)}>
           ☰
         </button>
       </div>
 
       {menuOpen && (
-        <div className="absolute top-full left-0 w-full bg-black text-white flex flex-col items-center gap-6 py-6 md:hidden">
+        <div className="absolute left-0 top-full flex w-full flex-col items-center gap-6 bg-black/95 py-6 text-white backdrop-blur-sm md:hidden">
           <Link href="/about" onClick={() => setMenuOpen(false)} className="text-sm tracking-wide">
             About
           </Link>
