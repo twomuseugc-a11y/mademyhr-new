@@ -35,6 +35,9 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://www.mademyhr.in",
   },
+  verification: {
+    google: "JAk2YgEaObB3Fy-dCkJmHtLGTRRQQHjjYYAvFtCvP5U"
+  },
 };
 
 const organizationJsonLd = {
