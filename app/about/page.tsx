@@ -8,14 +8,11 @@ import FadeIn from "@/components/animations/FadeIn";
 export default function AboutPage() {
   const storyParagraphs = [
     "We started with a simple thought — why should everyone wear the same designs?",
-    "In a world of mass production, most clothing feels repeated, predictable, and impersonal. We wanted to change that.",
-    "We’re two engineering students who decided to build something different — combining technology and creativity to design clothing that feels personal, rare, and meaningful.",
-    "At madebyhr, every piece is created after you order it. Not mass-produced. Not stocked in bulk.",
-    "This means what you wear isn’t just another design — it’s something made specifically for you.",
-    "We use AI as a tool to explore unique ideas, but every design is carefully refined and chosen by us before it becomes a real product.",
-    "No extra inventory. No unnecessary production. Just intentional design.",
-    "We know trusting a new brand takes a leap. That’s why we focus on being clear, honest, and consistent — from design to delivery.",
-    "When you choose madebyhr, you’re not just buying clothing. You’re choosing to stand out — with something that not everyone else has.",
+    "In a world of mass production, clothing often feels repeated and impersonal. We wanted to create something different.",
+    "We’re two engineering students building a brand where technology meets creativity — to make clothing that feels personal and rare.",
+    "Every piece at madebyhr is created only after you order it. No mass production. No excess. Just intentional design made for you.",
+    "We use AI to explore ideas, but every design is carefully refined and chosen by us.",
+    "We know trusting a new brand takes a leap — so we focus on being clear, honest, and consistent in everything we do.",
     "Because what you wear should feel like yours.",
     "— Team madebyhr",
   ];
